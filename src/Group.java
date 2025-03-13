@@ -124,17 +124,21 @@ public class Group
             //A value of 0 is used to represent an unknown square.
             if(arr[i]==-1)
             {
-                //A loop that iterates through each array in the ArrayList
-                //permutations to see if their ith element matches the ith
-                //element of arr.
+                /*
+                A loop that iterates through each array in the ArrayList
+                permutations to see if their ith element matches the ith
+                element of arr.
+                */
                 for(int j=0; j<permutations.size(); ++j)
                 {
                     int[] temp = permutations.get(j);
                     if(temp[i] != 0)
                     {
-                        //Removing the permutation that doesn't match with the current
-                        //state of the solution and decrement j as the next permutation
-                        //to check is at the same index as the deleted one.
+                        /*
+                        Removing the permutation that doesn't match with the current
+                        state of the solution and decrement j as the next permutation
+                        to check is at the same index as the deleted one.
+                        */
                         permutations.remove(j);
                         --j;
                     }
@@ -143,17 +147,21 @@ public class Group
             //A value of 1 is used to represent a known filled space.
             else if(arr[i]==1)
             {
-                //A loop that iterates through each array in the ArrayList
-                //permutations to see if their ith element matches the ith
-                //element of arr.
+                /*
+                A loop that iterates through each array in the ArrayList
+                permutations to see if their ith element matches the ith
+                element of arr.
+                */
                 for(int j=0; j<permutations.size(); ++j)
                 {
                     int[] temp = permutations.get(j);
                     if(temp[i] <= 0)
                     {
-                        //Removing the permutation that doesn't match with the current
-                        //state of the solution and decrement j as the next permutation
-                        //to check is at the same index as the deleted one.
+                        /*
+                        Removing the permutation that doesn't match with the current
+                        state of the solution and decrement j as the next permutation
+                        to check is at the same index as the deleted one.
+                        */
                         permutations.remove(j);
                         --j;
                     }
@@ -163,34 +171,48 @@ public class Group
     }
 
 
+    /**
+     * Creates all permutations of the clue numbers based on the binary permutations
+     * These permutations are used as possible solutions to a row/column.
+     */
     public void createPermutations()
     {
+        /*
+        A loop to iterate through each array in the ArrayList binaryPermutations.
+        Each array is used as a template to create a full permutation which are
+        add to the ArrayList permutations.
+        */
         for(int[] binary:binaryPermutations)
         {
-            int[] array1 = new int[size];
+            int[] arr = new int[size];
             int clueIndex = 0;
             int binaryIndex = 0;
             int count = 0;
 
-            for(int i=0; i<array1.length; ++i)
+            /*
+            A loop for iterating through each element of the int[] arr and
+            assigning values based on the template binary permutation and the
+            clues.
+            */
+            for(int i = 0; i< arr.length; ++i)
             {
                 if(binary[binaryIndex]==0)
                 {
-                    array1[i] = 0;
+                    arr[i] = 0;
                     ++binaryIndex;
                 }
                 else
                 {
-                    if(clueIndex< clues.size())
+                    if(clueIndex<clues.size())
                     {
-                        if(count< clues.get(clueIndex))
+                        if(count<clues.get(clueIndex))
                         {
-                            array1[i] = 1;
+                            arr[i] = 1;
                             ++count;
                         }
                         else
                         {
-                            array1[i] = 0;
+                            arr[i] = 0;
                             count = 0;
                             ++clueIndex;
                             ++binaryIndex;
@@ -198,7 +220,7 @@ public class Group
                     }
                 }
             }
-            permutations.add(array1);
+            permutations.add(arr);
         }
     }
 
@@ -215,10 +237,12 @@ public class Group
         Pattern pattern = Pattern.compile(regex);
         int length = binaryLength();
 
-        //A loop that generates all integers up to a specified power of 2 and
-        //converts them to binary. If the binary number has the correct number
-        //of 1s leading 0s are added to bring it up to a specified length and
-        //added to the ArrayList binaryPermutations.
+        /*
+        A loop that generates all integers up to a specified power of 2 and
+        converts them to binary. If the binary number has the correct number
+        of 1s leading 0s are added to bring it up to a specified length and
+        added to the ArrayList binaryPermutations.
+        */
         for(int i=0; i<(Math.pow(2, length)); ++i)
         {
             num = Integer.toBinaryString(i);
@@ -237,6 +261,11 @@ public class Group
     }
 
 
+    /**
+     * A method for determining if there's any overlap between individual clues in a
+     * row/column when the clue sequence starts from either end of the grid.
+     * @return int[] Known filled squares of the solution based on a simple overlap check
+     */
     public int[] Overlap()
     {
         int[] arr = new int[size];
@@ -244,6 +273,11 @@ public class Group
         int value = 1;
         int count = 0;
 
+        /*
+        A loop for filling the int[] arr with a possible solution
+        starting at the first element and no additional blank spaces
+        between each clue number.
+        */
         for(int i = 0; i< arr.length; ++i)
         {
             if(index<clues.size())
@@ -268,6 +302,12 @@ public class Group
         value = clues.size();
         index = clues.size()-1;
         count = 0;
+
+        /*
+        A loop for comparing the int[] arr with the possible solution
+        that starts at the last element and has no additional blank spaces
+        between each clue number.
+        */
         for(int i=arr.length-1; i>-1; --i)
         {
             if(index>-1)

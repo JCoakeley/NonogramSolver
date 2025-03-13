@@ -2,8 +2,18 @@ public class GameBoard {
 
     public int[][] gBoard;
 
-    public GameBoard(int size)
+    /**
+     * A constructor for a game board of a specified length and width.
+     * @param width of the game board
+     * @param length of the game board
+     */
+    public GameBoard(int width, int length)
     {
-        gBoard = new int[size][size];
+        gBoard = new int[length][width];
+    }
+
+    public int[] getGameBoardRow(int row)
+    {
+        return gBoard[row];
     }
 }
