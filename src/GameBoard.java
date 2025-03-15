@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class GameBoard {
 
     public int[][] gBoard;
@@ -58,5 +60,28 @@ public class GameBoard {
     {
         for(int i=0; i<arr.length; ++i)
             gBoard[i][column] = arr[i];
+    }
+
+    /**
+     * A method for determining if the game board is in a solved state.
+     * The game board is considered in a solved state if there are no 0s
+     * contained in the 2D array gBoard.
+     * @return boolean that states if the game board is in a solved state.
+     */
+    public boolean isSolved()
+    {
+        boolean solvedState = true;
+
+        //A loop for iterating through the array of arrays in gBoard and
+        //checking if the int[] have a 0 in them.
+        for(int[] rows:gBoard)
+        {
+            if(Arrays.binarySearch(rows, 0)>=0)
+            {
+                solvedState = false;
+                break;
+            }
+        }
+        return solvedState;
     }
 }
