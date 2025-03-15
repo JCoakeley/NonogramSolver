@@ -25,6 +25,25 @@ public class Group
     }
 
     /**
+     * A method for returning the length needed to print out the clues
+     * when printing the solved game board.
+     * @return int for the amount of space needed to print the clues to the console
+     */
+    public int printingClueLength()
+    {
+        int length = 0;
+
+        for(Integer clue:clues)
+        {
+            if(clue<10)
+                length += 2;
+            else
+                length += 3;
+        }
+        return length-1;
+    }
+
+    /**
      * Method that calculates and returns the number of clue elements plus
      * the extra blank spaces for a given row/column.
      * @return int Number of clues + number of extra blank spaces.
@@ -43,30 +62,30 @@ public class Group
         return clues.size() + (size-clueSum);
     }
 
-    /**
-     * A method that prints to console the binary permutations line by line
-     * followed by the full permutations line by line. Method used to verify
-     * permutations are being generated as intended.
-     */
-    public void printPermutations()
-    {
-        //Loop for printing each of the binary permutations line by line.
-        for(int[] temp:binaryPermutations)
-        {
-            //Loop to print out each element of a binary number held in an array.
-            for(int i:temp)
-                System.out.print(i);
-            System.out.println();
-        }
-        //Loop for printing each permutation line by line.
-        for(int[] temp:permutations)
-        {
-            //Loop for printing out each element of an individual permutation array.
-            for(int i:temp)
-                System.out.print(i);
-            System.out.println();
-        }
-    }
+//    /**
+//     * A method that prints to console the binary permutations line by line
+//     * followed by the full permutations line by line. Method used to verify
+//     * permutations are being generated as intended.
+//     */
+//    public void printPermutations()
+//    {
+//        //Loop for printing each of the binary permutations line by line.
+//        for(int[] temp:binaryPermutations)
+//        {
+//            //Loop to print out each element of a binary number held in an array.
+//            for(int i:temp)
+//                System.out.print(i);
+//            System.out.println();
+//        }
+//        //Loop for printing each permutation line by line.
+//        for(int[] temp:permutations)
+//        {
+//            //Loop for printing out each element of an individual permutation array.
+//            for(int i:temp)
+//                System.out.print(i);
+//            System.out.println();
+//        }
+//    }
 
 
     /**
@@ -266,7 +285,7 @@ public class Group
      * row/column when the clue sequence starts from either end of the grid.
      * @return int[] Known filled squares of the solution based on a simple overlap check
      */
-    public int[] Overlap()
+    public int[] overlap()
     {
         int[] arr = new int[size];
         int index = 0;
