@@ -137,7 +137,7 @@ public class Driver
         {
             if(i%5 == 0)
             {
-                System.out.println(" " + "-".repeat(width * 2 + 5));
+                System.out.println(" " + "-".repeat(width * 2 + (length/5) * 2 + 1));
             }
             for(int j=0; j<gBoard.getGBoardRow(i).length; ++j)
             {
@@ -154,6 +154,6 @@ public class Driver
             System.out.print(" |");
             System.out.println();
         }
-        System.out.println(" " + "-".repeat(width*2+5));
+        System.out.println(" " + "-".repeat(width * 2 + (length/5) * 2 + 1));
     }
 }
