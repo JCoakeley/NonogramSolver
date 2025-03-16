@@ -32,7 +32,11 @@ public class GameBoard {
      */
     public void setGBoardRow(int[] arr, int row)
     {
-        gBoard[row] = arr;
+        for(int i=0; i< arr.length; ++i)
+        {
+            if(arr[i] != 0)
+                gBoard[row][i] = arr [i];
+        }
     }
 
     /**
@@ -41,9 +45,9 @@ public class GameBoard {
      * @param column the column of gBoard to be returned
      * @return int[] specified column gBoard
      */
-    public int[] getGBoardColumn(int column)
+    public int[] getGBoardColumn(int column, int length)
     {
-        int[] output = new int[column];
+        int[] output = new int[length];
         for(int i=0; i<output.length; ++i)
             output[i] = gBoard[i][column];
 
@@ -59,7 +63,8 @@ public class GameBoard {
     public void setGBoardColumn(int[] arr, int column)
     {
         for(int i=0; i<arr.length; ++i)
-            gBoard[i][column] = arr[i];
+            if (arr[i] != 0)
+                gBoard[i][column] = arr[i];
     }
 
     /**

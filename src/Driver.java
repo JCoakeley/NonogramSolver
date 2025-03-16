@@ -17,12 +17,9 @@ public class Driver
 
         applyOverlap();
 
-        int i=0;
-        while (i<10)
-        {
+        while(!gBoard.isSolved())
             updateGameBoard();
-            ++i;
-        }
+
         printGameBoard();
 
 
@@ -106,7 +103,7 @@ public class Driver
         {
             //Passing the current state of a column to that columns Group object
             //and updating the possible permutations.
-            groups.get(i+length).managePermutations(gBoard.getGBoardColumn(i));
+            groups.get(i+length).managePermutations(gBoard.getGBoardColumn(i, length));
             //Assigning any common values between all the possible permutations
             //to the current state of the column.
             gBoard.setGBoardColumn(groups.get(i+length).commonPermutation(), i);
