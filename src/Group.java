@@ -8,7 +8,6 @@ public class Group
     ArrayList<int[]> permutations = new ArrayList<>();
     int size;
 
-
     /**
      * Constructor with parameters that take an ArrayList of clues
      * and an int for the size of the play field. ie clue: 7, 3, 5

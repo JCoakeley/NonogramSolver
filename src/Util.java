@@ -58,7 +58,7 @@ public class Util
         String fileName;
         Scanner input = new Scanner(System.in);
         System.out.print("Please enter the CSV filename that contains the grid size");
-        System.out.print("followed by the clues of the nonogram to be solved: ");
+        System.out.print(" followed by the clues of the nonogram to be solved: ");
         fileName = input.nextLine();
 
         if(!fileName.isEmpty())
@@ -70,7 +70,14 @@ public class Util
             while(!file.exists())
             {
                 System.out.print("File not found, please enter the correct file name: ");
-                file = new File(input.nextLine());
+                fileName = input.nextLine();
+                if(!fileName.isEmpty())
+                    file = new File(fileName);
+                else
+                {
+                    fileName = DEFAULT_FILE_NAME;
+                    file = new File(fileName);
+                }
             }
         }
         else
@@ -78,5 +85,4 @@ public class Util
 
         return fileName;
     }
-
 }
