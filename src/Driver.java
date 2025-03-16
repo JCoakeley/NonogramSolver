@@ -10,6 +10,7 @@ public class Driver
     public static void main(String[] args)
     {
         String fileName = Util.getFileName();
+        long start = System.currentTimeMillis();
         CSVContents = Util.readCSV(fileName);
         assignCSVContents(CSVContents);
         gBoard = new GameBoard(width, length);
@@ -20,6 +21,8 @@ public class Driver
             updateGameBoard();
 
         printGameBoard();
+        double timeElapsed = (System.currentTimeMillis() - start)/1000.0;
+        System.out.printf("Time Elapsed: %.3fs", timeElapsed);
 
 
 //        //Testing inputs to verify correct permutation calculations
