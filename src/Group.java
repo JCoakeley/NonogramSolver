@@ -62,11 +62,11 @@ public class Group
         return clues.size() + (size-clueSum);
     }
 
-    /**
-     * A method that prints to console the binary permutations line by line
-     * followed by the full permutations line by line. Method used to verify
-     * permutations are being generated as intended.
-     */
+//    /**
+//     * A method that prints to console the binary permutations line by line
+//     * followed by the full permutations line by line. Method used to verify
+//     * permutations are being generated as intended.
+//     */
 //    public void printPermutations()
 //    {
 //        //Loop for printing each of the binary permutations line by line.
