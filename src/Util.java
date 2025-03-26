@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Util
 {
-    private static final String DEFAULT_FILE_NAME = "10x10 Nonogram.csv";
+    private static final String DEFAULT_FILE_NAME = "25x25 Nonogram.csv";
 
     /**
      * A method that parses a line from a CSV file with a comma
@@ -19,8 +19,8 @@ public class Util
 
         //A loop that iterates through each string in the array
         //and parses it to an int to be returned.
-        for (String i:lineArray)
-            output.add(Integer.parseInt(i));
+        for (String integer:lineArray)
+            output.add(Integer.parseInt(integer));
 
         return output;
     }
@@ -71,13 +71,10 @@ public class Util
             {
                 System.out.print("File not found, please enter the correct file name: ");
                 fileName = input.nextLine();
-                if(!fileName.isEmpty())
-                    file = new File(fileName);
-                else
-                {
+                if(fileName.isEmpty())
                     fileName = DEFAULT_FILE_NAME;
-                    file = new File(fileName);
-                }
+
+                file = new File(fileName);
             }
         }
         else

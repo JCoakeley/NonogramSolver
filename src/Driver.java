@@ -13,29 +13,20 @@ public class Driver
         long start = System.currentTimeMillis();
         CSVContents = Util.readCSV(fileName);
         assignCSVContents(CSVContents);
-        gBoard = new GameBoard(width, length);
 
+        double timeElapsed = (System.currentTimeMillis() - start)/1000.0;
+        System.out.printf("Time Elapsed: %.3fs%n", timeElapsed);
+        
+        start = System.currentTimeMillis();
         applyOverlap();
 
         while(!gBoard.isSolved())
             updateGameBoard();
 
         printGameBoard();
-        double timeElapsed = (System.currentTimeMillis() - start)/1000.0;
-        System.out.printf("Time Elapsed: %.3fs", timeElapsed);
+        timeElapsed = (System.currentTimeMillis() - start)/1000.0;
+        System.out.printf("Time Elapsed: %.3fs%n", timeElapsed);
 
-
-//        //Testing inputs to verify correct permutation calculations
-//        ArrayList<Integer> test = new ArrayList<>();
-//        test.add(2);
-//        test.add(3);
-//        test.add(7);
-//        test.add(1);
-//        test.add(1);
-//        test.add(5);
-//        Group test1 = new Group(test, 30);
-//        System.out.println(Arrays.toString(test1.overlap()));
-//        //test1.printPermutations();
     }
 
     /**
@@ -49,6 +40,8 @@ public class Driver
     {
         width = CSVContents.getFirst().getFirst();
         length = CSVContents.getFirst().getLast();
+        gBoard = new GameBoard(width, length);
+        groups.ensureCapacity(width + length);
 
         //A loop for creating all the Group objects that will represent the
         //possible solutions for the rows.
@@ -139,24 +132,24 @@ public class Driver
         for(int i=0; i<length; ++i)
         {
             if(i%5 == 0)
-            {
-                System.out.println(" " + "-".repeat(width * 2 + (length/5) * 2 + 1));
-            }
+                System.out.println(" " + "-".repeat(width * 2 + (width/5) * 2 + 1));
+
             for(int j=0; j<gBoard.getGBoardRow(i).length; ++j)
             {
                 if(j%5 == 0)
                     System.out.print(" |");
+
                 if(gBoard.getGBoardRow(i)[j] == 1)
-                    printChar = '1';
+                    printChar = '■';
                 else if (gBoard.getGBoardRow(i)[j] == 0)
                     printChar = '0';
                 else
                     printChar = 'x';
+
                 System.out.print(" " + printChar);
             }
-            System.out.print(" |");
-            System.out.println();
+            System.out.println(" |");
         }
-        System.out.println(" " + "-".repeat(width * 2 + (length/5) * 2 + 1));
+        System.out.println(" " + "-".repeat(width * 2 + (width/5) * 2 + 1));
     }
 }

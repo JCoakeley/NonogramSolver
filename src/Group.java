@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.regex.Pattern;
 
 public class Group
 {
@@ -19,7 +18,7 @@ public class Group
     {
         this.clues = clues;
         this.size = size;
-        createBinaryPermutations();
+        createBinaryPermutations(clues.size(), binaryLength());
         createPermutations();
     }
 
@@ -195,6 +194,7 @@ public class Group
      */
     public void createPermutations()
     {
+        permutations.ensureCapacity(binaryPermutations.size());
         /*
         A loop to iterate through each array in the ArrayList binaryPermutations.
         Each array is used as a template to create a full permutation which are
@@ -240,40 +240,47 @@ public class Group
             }
             permutations.add(arr);
         }
+        permutations.ensureCapacity(0);
     }
 
 
     /**
      * A method that creates all possible binary numbers of a fixed length
-     * and with a specified number of 1s.
+     * and with a specified number of 0s.
      */
-    public void createBinaryPermutations()
+    public void createBinaryPermutations(int count, int length)
     {
-        String num;
-        //Regular expression that will only match with the specified number of 1s
-        String regex = "^(0*" + "10*".repeat(clues.size()) + ")$";
-        Pattern pattern = Pattern.compile(regex);
-        int length = binaryLength();
+        int[] arr = new int[length];
 
-        /*
-        A loop that generates all integers up to a specified power of 2 and
-        converts them to binary. If the binary number has the correct number
-        of 1s leading 0s are added to bring it up to a specified length and
-        added to the ArrayList binaryPermutations.
-        */
-        for(int i=0; i<(Math.pow(2, length)); ++i)
+        //A loop used to generate the first binary permutation with 1s place in the
+        //first x (count) number of elements of the array.
+        for(int i=0; i<count; ++i)
+            arr[i] = i+1;
+
+        binaryPermutations.add(arr.clone());
+
+        //A loop for finding the next element to shift to the right to create the
+        //next permutation.
+        for(int i=0; i<length-1; ++i)
         {
-            num = Integer.toBinaryString(i);
-            if(pattern.matcher(num).matches())
+            if (arr[i] > 0 && arr[i+1] == 0)
             {
-                num = "0".repeat(length-num.length()) + num;
-                int[] temp = new int[num.length()];
+                arr[i+1] = arr[i];
+                arr[i] = 0;
 
-                //A loop to convert the binary string into an int[]
-                for(int j=0; j<num.length(); ++j)
-                    temp[j] = Character.getNumericValue(num.charAt(j));
-
-                binaryPermutations.add(temp);
+                //A loop for resetting the position of any none 0 element of the
+                //array to the left of the shifted element.
+                for(int j=0; j<i; ++j)
+                {
+                    if(arr[j] != 0 && arr[j]-1 < j)
+                    {
+                        arr[arr[j]-1] = arr[j];
+                        arr[j] = 0;
+                    }
+                }
+                binaryPermutations.add(arr.clone());
+                //Resetting the loop after a new permutation is found.
+                i=-1;
             }
         }
     }
