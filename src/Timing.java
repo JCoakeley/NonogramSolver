@@ -29,10 +29,10 @@ public class Timing
     private static int totalAttemptedPermutations = 0;
     private static int totalEarlyPruningInstances = 0;
     private static int totalMaxPermutations = 0;
-    private static int totalAllocatedPermutions = 0;
+    private static int totalAllocatedPermutations = 0;
 
     public enum Timings {FileReading, Initialization, CountGeneration, Overlap, SolvingLoop,
-        Total, Generation, Filtering, EdgePattern, ConsistentPattern};
+        Total, Generation, Filtering, EdgePattern, ConsistentPattern}
 
     /**
      * Method for setting the starting time of a solving process. Both generating and
@@ -144,7 +144,7 @@ public class Timing
 
     public static void addAllocatedPermutationCount(int allocatedPermutations)
     {
-        totalAllocatedPermutions += allocatedPermutations;
+        totalAllocatedPermutations += allocatedPermutations;
     }
 
     /**
@@ -183,7 +183,7 @@ public class Timing
             pw.printf("Total Deducing Edge Patterns: %s%n", formatTime(edgeEnd - edgeStart));
             pw.printf("Total Generating Consistent Patterns: %s%n", formatTime(commonEnd - commonStart));
             pw.printf("%nTotal Permutations Generated: %,d%n", totalPermutations);
-            pw.printf("Total Allocated Permutations: %,d%n", totalAllocatedPermutions);
+            pw.printf("Total Allocated Permutations: %,d%n", totalAllocatedPermutations);
             pw.printf("Total Attempted Partial Permutations: %,d%n", totalAttemptedPermutations);
             pw.printf("Total Early Pruning Instances: %,d%n", totalEarlyPruningInstances);
             pw.printf("Total Maximum Permutations: %,d%n", totalMaxPermutations);
