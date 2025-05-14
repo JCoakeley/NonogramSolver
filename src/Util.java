@@ -1,73 +1,76 @@
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * Utility class for reading files, getting filenames and calculation combinations.
+ */
 public class Util
 {
-    private static final String DEFAULT_FILE_NAME = "25x25 Nonogram.csv";
+    /**
+     * Default file name to use if the user doesn't provide one.
+     */
+    private static final String DEFAULT_FILE_NAME = "25x25 Nonogram.txt";
 
     /**
-     * A method that parses a line from a CSV file with a comma
-     * delimiter. Returns an ArrayList of Integers.
-     * @param line a line from a CSV file
-     * @return ArrayList<Integer>
+     * Reads a file and converts each row into an integer array.
+     * Handles potential errors during file reading.
+     *
+     * @param fileName The name of the file to read.
+     * @return An ArrayList of integer arrays, where each array represents a row of the file.
+     *         Returns an empty ArrayList if an error occurs during file reading.
      */
-    private static ArrayList<Integer> parseLine(String line)
-    {
-        ArrayList<Integer> output = new ArrayList<>();
-        String[] lineArray = line.split(",");
+    public static ArrayList<int[]> readFile(String fileName) {
 
-        //A loop that iterates through each string in the array
-        //and parses it to an int to be returned.
-        for (String integer:lineArray)
-            output.add(Integer.parseInt(integer));
+        ArrayList<int[]> output = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(fileName)))
+        {
+            String line;
+
+            // Reading each line of the file one at a time.
+            while ((line = br.readLine()) != null)
+            {
+                String[] lineArray = line.split(",");
+                int[] row = new int[lineArray.length];
+
+                // Converting each element of the line into an integer.
+                for (int i = 0; i < lineArray.length; i++)
+                    row[i] = Integer.parseInt(lineArray[i]);
+
+                output.add(row);
+            }
+        } catch (Exception e) {
+            System.err.println("Error reading File: " + e.getMessage());
+        }
 
         return output;
     }
 
     /**
-     * A method that will read a CSV file and return an ArrayList of
-     * ArrayLists for each line.
-     * @param fileName Name of the CSV file to be read
-     * @return ArrayList<ArrayList<Integer>>
-     */
-    public static ArrayList<ArrayList<Integer>> readCSV(String fileName)
-    {
-        ArrayList<ArrayList<Integer>> output = new ArrayList<>();
-
-        try(Scanner input = new Scanner(new File(fileName)))
-        {
-            while(input.hasNextLine())
-                output.add(parseLine(input.nextLine()));
-        }
-        catch (Exception e)
-        {
-            System.err.println("Error: " + e.getMessage());
-        }
-        return output;
-    }
-
-    /**
-     * A method for getting the filename from the user and checking to ensure
-     * the file exists before proceeding. If the user doesn't enter anything
-     * a default filename will be used.
-     * @return String the filename entered by the user
+     * Prompts the user for a file name and validates its existence. If the user
+     * enters an empty string, a default file name is used.
+     *
+     * @return The file name entered by the user or the default file name if no
+     *         input is provided.
      */
     public static String getFileName()
     {
         String fileName;
         Scanner input = new Scanner(System.in);
-        System.out.print("Please enter the CSV filename that contains the grid size");
+        System.out.print("Please enter the filename that contains the grid size");
         System.out.print(" followed by the clues of the nonogram to be solved: ");
         fileName = input.nextLine();
 
-        if(!fileName.isEmpty())
+        if (!fileName.isEmpty())
         {
             File file = new File(fileName);
 
-            //A loop that will continue to ask the user for a filename and check
-            //to ensure it exists before proceeding.
-            while(!file.exists())
+            // A loop that will continue to ask the user for a filename and check
+            // to ensure it exists before proceeding.
+            while (!file.exists())
             {
                 System.out.print("File not found, please enter the correct file name: ");
                 fileName = input.nextLine();
@@ -81,5 +84,32 @@ public class Util
             fileName = DEFAULT_FILE_NAME;
 
         return fileName;
+    }
+
+    /**
+     * Calculates the binomial coefficient "n choose r" nCr.
+     *
+     * @param n The total number of items.
+     * @param r The number of item to choose.
+     * @return The binomial coefficient nCr. Return 0 is f is invalid.
+     */
+    public static int nCr(int n, int r)
+    {
+        if (r < 0 || r > n)
+            return 0;
+
+        if (r == 0 || r == n)
+            return 1;
+
+        r = Math.min(r, n - r); // Use symmetry to reduce calculations
+        long result = 1;
+
+        for (int i = 1; i <= r; i++)
+        {
+            result *= n - (r - i);
+            result /= i;
+        }
+
+        return (int)result; // Cast back to int (assuming the result won't overflow)
     }
 }

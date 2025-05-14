@@ -2,7 +2,10 @@ import java.util.Arrays;
 
 public class GameBoard {
 
-    public int[][] gBoard;
+    private final int[][] gBoard;
+    private final int[] rowsToUpdate;
+    private final int[] columnsToUpdate;
+
 
     /**
      * A constructor for a game board of a specified length and width.
@@ -12,6 +15,8 @@ public class GameBoard {
     public GameBoard(int width, int length)
     {
         gBoard = new int[length][width];
+        rowsToUpdate = new int[length];
+        columnsToUpdate = new int[width];
     }
 
     /**
@@ -32,11 +37,12 @@ public class GameBoard {
      */
     public void setGBoardRow(int[] arr, int row)
     {
-        for(int i=0; i< arr.length; ++i)
-        {
-            if(arr[i] != 0)
-                gBoard[row][i] = arr [i];
-        }
+        for (int i = 0; i < arr.length; i++)
+            if (arr[i] != 0 && arr[i] != gBoard[row][i])
+            {
+                gBoard[row][i] = arr[i];
+                columnsToUpdate[i] = 1;
+            }
     }
 
     /**
@@ -48,7 +54,8 @@ public class GameBoard {
     public int[] getGBoardColumn(int column, int length)
     {
         int[] output = new int[length];
-        for(int i=0; i<output.length; ++i)
+
+        for (int i = 0; i < output.length; i++)
             output[i] = gBoard[i][column];
 
         return output;
@@ -62,9 +69,12 @@ public class GameBoard {
      */
     public void setGBoardColumn(int[] arr, int column)
     {
-        for(int i=0; i<arr.length; ++i)
-            if (arr[i] != 0)
+        for (int i = 0; i < arr.length; i++)
+            if (arr[i] != 0 && arr[i] != gBoard[i][column])
+            {
                 gBoard[i][column] = arr[i];
+                rowsToUpdate[i] = 1;
+            }
     }
 
     /**
@@ -75,18 +85,34 @@ public class GameBoard {
      */
     public boolean isSolved()
     {
-        boolean solvedState = true;
-
         //A loop for iterating through the array of arrays in gBoard and
-        //checking if the int[] have a 0 in them.
-        for(int[] rows:gBoard)
-        {
-            if(Arrays.binarySearch(rows, 0)>=0)
-            {
-                solvedState = false;
-                break;
-            }
-        }
-        return solvedState;
+        //checking each element if they are 0. Returns false on the first
+        //0 found, if no 0s found gBoard is solved and return true.
+        for (int[] row : gBoard)
+            for (int cell : row)
+                if(cell == 0)
+                    return false;
+
+        return true;
+    }
+
+    public int[] getRowsToUpdate()
+    {
+        return rowsToUpdate;
+    }
+
+    public void resetRowsToUpdate()
+    {
+        Arrays.fill(rowsToUpdate, 0);
+    }
+
+    public int[] getColumnsToUpdate()
+    {
+        return columnsToUpdate;
+    }
+
+    public void resetColumnsToUpdate()
+    {
+        Arrays.fill(columnsToUpdate, 0);
     }
 }
