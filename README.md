@@ -60,7 +60,3 @@ A high-performance Nonogram (Picross) puzzle solver written in Java. It parses s
 ..###
 ##..#
 ```
-
-## 📎 License
-
-MIT
