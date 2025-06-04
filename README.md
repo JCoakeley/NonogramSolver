@@ -26,16 +26,17 @@ A high-performance Nonogram (Picross) puzzle solver written in Java. It parses s
 ## 📁 Sample Input File
 
 ```
-5 5
-1
+5,5
 3
-1 1
 3
 1
+3
+1,1,1
+2,1
 2
-1 1
-3
+2,2
 1
+3
 ```
 
 ## 💡 Optimizations
@@ -54,9 +55,11 @@ A high-performance Nonogram (Picross) puzzle solver written in Java. It parses s
 ## 🧪 Example Output
 
 ```
-#..##
-##..#
-.#.##
-..###
-##..#
+-------------
+ | ■ ■ ■ X X |
+ | ■ ■ ■ X X |
+ | X X X X ■ |
+ | X X ■ ■ ■ |
+ | ■ X ■ X ■ |
+ -------------
 ```
